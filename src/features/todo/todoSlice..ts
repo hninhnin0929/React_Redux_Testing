@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from "../../app/store";
 
 export interface ToDoItem {
@@ -25,9 +25,13 @@ export const todoSlice = createSlice({
     name: "todo",
     initialState,
     reducers: {
-
+        addTodo:(state, action: PayloadAction<ToDoItem>) => {
+            console.log("Payload ", action);
+            state.items.push(action.payload);
+        }
     }
 });
+export const { addTodo } = todoSlice.actions;
 export const selectTodo = (state: RootState) => state.todo.items;
 
 export default todoSlice.reducer;
