@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from "../../app/store";
+import { fetchToDo } from './todoAPI';
 
 export interface ToDoItem {
     id: number,
@@ -21,6 +22,13 @@ const initialState: ToDoList = {
    
     ]
 };
+export const getToDoByAPI = createAsyncThunk(
+    'todo/fetchTodo',
+    async(id: number)=>{
+        const response = await fetchToDo(id);
+        return response.json();
+    }
+);
 export const todoSlice = createSlice({
     name: "todo",
     initialState,
@@ -28,10 +36,28 @@ export const todoSlice = createSlice({
         addTodo:(state, action: PayloadAction<ToDoItem>) => {
             console.log("Payload ", action);
             state.items.push(action.payload);
+        },
+        removeTodo:(state, action: PayloadAction<ToDoItem>) => {
+            console.log("Payload ", action);
+            state.items = state.items.filter(item=> item.id != action.payload.id);
+        },
+        updateTodo:(state, action: PayloadAction<ToDoItem>) => {
+            console.log("Payload ", action);
+            state.items = state.items.map(item=> item.id == action.payload.id ? action.payload : item);
         }
-    }
+    },
+    extraReducers(builder) {
+        builder.addCase(getToDoByAPI.fulfilled, (state , action) =>{
+            console.log("API Call Done Payload ", action.payload); // api response is payload
+            let item = {
+                id: action.payload.id,
+                text: action.payload.title
+            };
+            state.items.push(item);
+        })
+    },
 });
-export const { addTodo } = todoSlice.actions;
+export const { addTodo, removeTodo, updateTodo } = todoSlice.actions;
 export const selectTodo = (state: RootState) => state.todo.items;
 
 export default todoSlice.reducer;
