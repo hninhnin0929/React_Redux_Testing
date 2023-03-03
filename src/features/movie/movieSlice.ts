@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import exp from "constants"
 import { RootState } from "../../app/store"
 
@@ -13,10 +13,10 @@ export interface Movie{
     year: number
 }
 export interface MovieList{
-    movies: Array<Movie>
+    items: Array<Movie>
 }
 const initialState: MovieList = {
-    movies: [
+    items: [
         {
             id: "1",
             title: "Matrix",
@@ -41,9 +41,12 @@ export const movieSlice = createSlice({
     name: "movies",
     initialState,
     reducers: {
-
+        addMovie:(state, action: PayloadAction<Movie>)=>{
+            console.log("Payload ", action);
+            state.items.push(action.payload);
+        }
     }
 });
-export const selectMovie = (state: RootState) =>  state.movies.movies;
+export const selectMovie = (state: RootState) =>  state.movies.items;
 
 export default movieSlice.reducer;

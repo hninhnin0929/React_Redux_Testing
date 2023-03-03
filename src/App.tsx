@@ -4,12 +4,14 @@ import { Counter } from './features/counter/Counter';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import ToDoListUI from './features/todo/ToDoListUI';
+import MovieList from './features/movie/MovieList';
 
 function App() {
   return (
     <div className="App">
       {/* <Counter /> */}
-      <ToDoListUI/>
+      {/* <ToDoListUI/> */}
+      <MovieList/>
     </div>
   );
 }
