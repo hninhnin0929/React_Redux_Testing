@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import exp from "constants"
 import { RootState } from "../../app/store"
 
 export interface Director{
