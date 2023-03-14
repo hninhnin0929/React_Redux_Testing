@@ -46,7 +46,7 @@ export default function MovieList(){
     return (
         <div>
             {/* Movie List {movies.length} */}
-            <button type="button" className="btn btn-primary">New Movie</button>
+            {/* <button type="button" className="btn btn-primary">New Movie</button> */}
             {/* <NewMovieDialog/> */}
             <NewMovieDialog/>
             {movies.map(movie=>
