@@ -40,6 +40,10 @@ export const movieSlice = createSlice({
     name: "movies",
     initialState,
     reducers: {
+        loadAllMovie:(state, action: PayloadAction<Array<Movie>>)=>{
+            console.log("Load All Movies ", action);
+            state.items = action.payload;
+        },
         addMovie:(state, action: PayloadAction<Movie>)=>{
             console.log("Payload ", action);
             state.items.push(action.payload);
